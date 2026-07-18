@@ -2,7 +2,7 @@
 const bcrypt=require("bcryptjs");
 
 //importing jwt to generate a token for the user after successful registration
-const jwt=require("jsonwebtoken");
+const generateToken = require("../utils/generateToken");
 
 //importing model to send data to database in the set schema
 const User=require("../models/user");
@@ -43,17 +43,7 @@ const registerUser= async(req,res)=>{
     
 
     //generating a token for the user after successful registration using jwt.sign() method
-     const token=jwt.sign({
-        //payload for the token, in this case we are sending the user id
-        id:user._id
-        }
-           //secret key for the token, in this case we are using the JWT_SECRET from the environment variable
-          ,process.env.JWT_SECRET,
-        {
-            //token expiration time, in this case we are setting it to 1 day
-           expiresIn:"1d"
-        }
-    );
+     const token=generateToken(user._id);
 
     //returning the user data and token to the client with 201 status code
     //return 201 if user succesfully created
@@ -82,4 +72,64 @@ const registerUser= async(req,res)=>{
 
 };
 
-module.exports={registerUser};
+
+
+//login user
+const loginUser=async(req,res)=>{
+    try{
+        //destructuring email and password from request body
+        const{email,password}=req.body;
+
+        //validate login creadentials
+        if(!email||!password){
+            return res.status(400).json({
+                message: "email and password are required"
+            });
+        } 
+
+        //checking if user exists in the database, if not return 400 status code with message
+        const user=await User.findOne({email});
+        if(!user){
+            return res.status(400).json({
+                message: "Invalid email or password"
+            });
+        }
+
+        //checking if password is correct, if not return 400 status code with message
+        const isMatch= await bcrypt.compare(password,user.password);
+        
+         if(!isMatch){
+            return res.status(400).json({
+                message: "Invalid email or password"
+            });
+         }
+
+         //generating a token for the user after successful login using jwt.sign() method
+        const token=generateToken(user._id);
+
+        return res.status(200).json({
+           message: "Login successful",
+           token,
+           user: {
+                  id: user._id,
+                  name: user.name,
+                  email: user.email
+        }
+    });
+
+    }
+    
+    catch(error){
+        console.error(error);
+        return res.status(500).json({
+            message:"internal server error"
+        })
+    }
+};
+       
+
+
+
+module.exports={
+    registerUser,
+     loginUser};
