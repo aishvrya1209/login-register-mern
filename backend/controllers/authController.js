@@ -126,10 +126,15 @@ const loginUser=async(req,res)=>{
         })
     }
 };
+//function to get user profile
+const getProfile = (req,res)=>{
+    res.json(req.user);
+};
        
 
 
 
 module.exports={
     registerUser,
-     loginUser};
+     loginUser,getProfile
+};
