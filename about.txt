@@ -1,0 +1,39 @@
+"I built a full-stack MERN authentication system where users can register, log in, and access protected profile routes using JWT authentication. Passwords are securely hashed with bcrypt before being stored in MongoDB. The backend uses Express middleware to verify JWTs and protect APIs, while the React frontend manages authentication state using localStorage along with ProtectedRoute and PublicRoute components to control access based on login status."
+What you've accomplished
+Backend
+✅ Express server setup
+✅ MongoDB Atlas connection
+✅ Mongoose User model
+✅ Environment variables with .env
+✅ Password hashing using bcrypt
+✅ JWT token generation
+✅ JWT authentication middleware
+✅ Register API
+✅ Login API
+✅ Protected Profile API
+✅ CORS configuration
+✅ Organized folder structure (controllers, models, routes, middleware, db)
+Frontend
+✅ React + Vite
+✅ Bootstrap integration
+✅ Axios
+✅ React Router
+✅ Login page
+✅ Register page
+✅ Profile page
+✅ Controlled forms (useState)
+✅ API integration
+✅ Store JWT in localStorage
+✅ Store user in localStorage
+✅ Logout
+✅ ProtectedRoute
+✅ PublicRoute
+Testing
+✅ Register new user
+✅ Prevent duplicate registration
+✅ Login
+✅ Profile loads correctly
+✅ Logout
+✅ Login again
+✅ Protected routes work
+✅ Public routes work
