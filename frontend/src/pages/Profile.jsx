@@ -13,15 +13,19 @@ const handleLogout=()=>{
 
 
     return(
-    <div className="container mt-5">
-    <h1>Profile Page</h1>
-     <p><strong>Name:</strong> {user.name}</p>
-
-      <p><strong>Email:</strong> {user.email}</p>
-      <button className="btn btn-danger" 
-      onClick={handleLogout}>
-      Logout
-      </button>
+    <div className='card shadow mt-5'>
+        <div className='card-body'>
+            <h2 className='card-title'>
+                Welcome {user.name}
+            </h2>
+            <p className='card-text'>
+                Email: {user.email}
+            </p>
+            <button className='btn btn-danger'
+            onClick={handleLogout}>
+                Logout
+            </button>
+        </div>
     </div>
 
     )
