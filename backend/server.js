@@ -2,15 +2,19 @@
 require("dotenv").config();
 //import package express and connectDB function from db.js
 const express = require("express");
-
+const cors=require("cors");
 //import connectDB function from db.js and authRoutes from authRoutes.js
 const connectDB=require("./db/db.js");
 const authRoutes=require("./routes/authRoutes.js")
 
 //create express app
 const app=express();
+
 //middleware to parse incoming request body as JSON
 app.use(express.json());
+
+//middleware to enable CORS for all routes
+app.use(cors());
 
 //app url for auth routes
 app.use("/api/auth",authRoutes);
