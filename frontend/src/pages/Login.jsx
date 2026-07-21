@@ -1,13 +1,15 @@
-import { Navigate, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import {Link, useNavigate } from 'react-router-dom'
 import {useState} from 'react'
-import { Link } from 'react-router-dom';
+import { loginUser } from '../services/authService';
+import { useAuth } from "../context/AuthContext";
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate= useNavigate();
   const [message,setMessage]=useState('');
   const [loading,setLoading]=useState(false);
+  const[showPassword,setShowPassword]=useState(false);
+  const { login } = useAuth();
   const handleSubmit=async(e)=> {
   //prevents browser from refreshing the page when the form is submitted
   e.preventDefault();
@@ -15,19 +17,12 @@ function Login() {
   setMessage("");//clear any previous error
   setLoading(true);//so that no multiple login button pressed while a request is travelling
 
-  //to send the post to the backend server we need to use axios library
-  //.post(url, data) and invoke the backend api route for login
-  //we send {email, password} as the data beacuse backend expects const {email, password} = req.body; in the backend
-  try{const response=await axios.post("http://localhost:5000/api/auth/login",{
-    email,
-    password
-  })
+  try{const response= await loginUser(email,password);
+    //use authservice
 //destructure the response data to get message, token and user
  const { message, token, user } = response.data;
- //store the token and user in local storage for future use
-localStorage.setItem("token", token);
-//store the user object in local storage as a string using JSON.stringify
-localStorage.setItem("user", JSON.stringify(user));
+ //use context 
+ login(user,token);
 setLoading(false);
 //move to next page which is profile
 navigate("/profile")}
@@ -54,6 +49,8 @@ catch(error){
       )}
 
       <form onSubmit={handleSubmit}>
+
+
         <div className="mb-3">
           <label>Email:</label>
           {/* //input control */}
@@ -62,16 +59,28 @@ catch(error){
            value={email}
             onChange={(e) => setEmail(e.target.value)} />
         </div>
+
+
         <div className="mb-3">
           <label>Password:</label>
-          <input type="password" 
+          <input type={showPassword?"text":"password"} 
           className="form-control"
           value={password}
           onChange={(e)=> setPassword(e.target.value)} />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
+          <button
+          type="button"
+          onClick={() => setShowPassword(prev => !prev)}
+          >
+          {showPassword ? "Hide" : "Show"}
+          </button>
+          </div>
+
+      
+      <button type="submit" className="btn btn-primary" disabled={loading}>
         {loading ? "Logging in..." : "Login"}
         </button>
+
+
         <p className="mt-3">
           Don't have an account?{" "}
           <Link to="/register">Register</Link>

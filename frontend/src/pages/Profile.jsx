@@ -1,13 +1,13 @@
 import { Navigate, useNavigate } from 'react-router-dom'
+import { useAuth } from "../context/AuthContext";
 function Profile(){
-    const user = JSON.parse(localStorage.getItem("user"));
+    const { user, logout } = useAuth();
     if (!user) {
     return <h2>Please login first.</h2>;
 }
 const navigate=useNavigate();
 const handleLogout=()=>{
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    logout();
     navigate("/");
 };
 

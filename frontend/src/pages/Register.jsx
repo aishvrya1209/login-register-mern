@@ -1,32 +1,35 @@
-import { Navigate, useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom';
-import axios from 'axios'
+import { Navigate, useNavigate,Link } from 'react-router-dom'
+import { RegisterUser } from '../services/authService';
 import {useState} from 'react'
+import { useAuth } from "../context/AuthContext";
+
 function Register() {
   const [name,setName]=useState('');
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate= useNavigate();
   const [message,setMessage]=useState('');
+  const { login } = useAuth();
   const [loading,setLoading]=useState(false)
+  const passwordRegex =
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const handleSubmit=async(e)=> {
   //prevents browser from refreshing the page when the form is submitted
   e.preventDefault();
   setLoading(true);
-  //to send the post to the backend server we need to use axios library
-  //.post(url, data) and invoke the backend api route for register
-  //we send {name,email, password} as the data beacuse backend expects const {name,email, password} in the backend
-  try{const response=await axios.post("http://localhost:5000/api/auth/register",{
-    name,
-    email,
-    password
-  })
+  
+  try{
+    if (!passwordRegex.test(password)) {
+    setMessage(
+        "Password must be at least 8 characters and include uppercase, lowercase, a number, and a special character."
+    );
+    setLoading(false);
+    return;
+   }
+const response= await RegisterUser(name,email,password);
 //destructure the response data to get message, token and user
  const { message,token, user } = response.data;
- //store the token and user in local storage for future use
-localStorage.setItem("token", token);
-//store the user object in local storage as a string using JSON.stringify
-localStorage.setItem("user", JSON.stringify(user));
+ login(user,token);
 //move to next page which is profile
 setLoading(false);
 navigate("/profile")}
