@@ -34,9 +34,7 @@ catch(error){
 
   return (
    <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
-     <div className='row justify-content-center'>
-      <div className='col-md-6'>
-      <div className="card shadow-lg border-0 rounded-4" style={{ maxWidth: "450px", width: "100%" }}>
+     <div className="card shadow-lg border-0 rounded-4" style={{ maxWidth: "450px", width: "100%" }}>
       <div className="card-body p-5">
 
       <div className="text-center mb-4">
@@ -106,8 +104,6 @@ catch(error){
           <Link to="/register">Register</Link>
         </p> 
       </form>
-    </div>
-    </div>
     </div>
     </div>
     </div>
