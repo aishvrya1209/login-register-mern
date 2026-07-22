@@ -37,3 +37,28 @@ Testing
 ✅ Login again
 ✅ Protected routes work
 ✅ Public routes work
+
+and a few commit later;
+
+Frontend
+✅ React Router
+✅ Login page
+✅ Register page
+✅ Profile page
+✅ ProtectedRoute
+✅ PublicRoute
+✅ Axios instance
+✅ Auth service
+✅ Bootstrap Card UI
+✅ Loading states
+✅ Error messages
+✅ Show/Hide password
+✅ Environment variables
+
+🏗️ Architecture
+✅ API layer (api/axios)
+✅ Service layer (authService)
+✅ Context API
+✅ Custom hook (useAuth)
+✅ Single source of truth for authentication
+✅ localStorage centralized in one file

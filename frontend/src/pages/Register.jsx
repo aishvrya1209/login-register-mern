@@ -11,6 +11,7 @@ function Register() {
   const [message,setMessage]=useState('');
   const { login } = useAuth();
   const [loading,setLoading]=useState(false)
+  const [showPassword,setShowPassword]=useState(false)
   const passwordRegex =
 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   const handleSubmit=async(e)=> {
@@ -40,45 +41,76 @@ catch(error){
 };
 
   return (
-    <div className='container'>
+    <div className='container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light'>
     <div className='row justify-content-center'>
     <div className='col-md-6'>
-    <div className="card shadow">
+    <div className="card shadow-lg border-0 rounded-4" style={{ maxWidth: "450px", width: "100%" }}>
     <div className="card-body">
-        <h2 className='text-center mb-4'>Register</h2>
+        
+  <div className="text-center mb-4">
+    <h2 className="fw-bold">Create Account ✨</h2>
+    <p className="text-muted mb-0">
+        Join us today
+    </p>
+  </div>
 
       {message&&(
         <div className="alert alert-danger">
         {message}
         </div>
       )}
+
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label>Name</label>
+          <label className="form-label">Name</label>
           <input type="text" 
           className="form-control"
+          placeholder='Enter your full name'
+          required
+          autoComplete="name"
           value={name}
           onChange={(e)=> setName(e.target.value)} />
         </div>
+
         <div className="mb-3">
-          <label>Email:</label>
+          <label className="form-label">Email:</label>
           {/* //input control */}
           <input type="email" 
           className="form-control"
+          placeholder='Enter your email'
+          required
+          autoComplete="email"
            value={email}
             onChange={(e) => setEmail(e.target.value)} />
         </div>
+
         <div className="mb-3">
-          <label>Password:</label>
-          <input type="password" 
+          <label className="form-label">Password:</label>
+          
+          <div className="input-group">
+          <input type={showPassword ? "text" : "password"}
           className="form-control"
+          placeholder='Create a password'
+          required
+          autoComplete="new-password"
           value={password}
           onChange={(e)=> setPassword(e.target.value)} />
+          
+          <button
+        className="btn btn-outline-secondary"
+        type="button"
+        onClick={() => 
+        setShowPassword(prev => !prev)}>
+        {showPassword ? "Hide" : "Show"}
+        </button>
         </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
+        </div>
+
+        <button type="submit" className="btn btn-success w-100 mt-2"
+         disabled={loading}>
           {loading?"Registering..":"Register"}
         </button>
-         <p className="mt-3">
+         <p className="text-center mt-3 mb-0">
            Already have an account?{" "}
            <Link to="/">Login</Link>
          </p>

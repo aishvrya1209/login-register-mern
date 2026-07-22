@@ -13,19 +13,28 @@ const handleLogout=()=>{
 
 
     return(
-    <div className='card shadow mt-5'>
-        <div className='card-body'>
+    < div className="container-fluid min-vh-100 bg-light d-flex justify-content-center align-items-center">
+    <div  className="card shadow-lg border-0 rounded-4"
+    style={{ maxWidth: "500px", width: "100%" }}>
+        <div className='card-body p-5'>
             <h2 className='card-title'>
-                Welcome {user.name}
+                👤 Welcome {user.name}
             </h2>
-            <p className='card-text'>
-                Email: {user.email}
-            </p>
-            <button className='btn btn-danger'
+            <div className="mb-3">
+            <h6 className="text-muted">Full Name</h6>
+            <p className="fs-5 fw-semibold">{user.name}</p>
+            </div>
+
+            <div className="mb-4">
+            <h6 className="text-muted">Email Address</h6>
+            <p className="fs-5 fw-semibold">{user.email}</p>
+            </div>
+            <button className='btn btn-danger w-100'
             onClick={handleLogout}>
                 Logout
             </button>
         </div>
+    </div>
     </div>
 
     )

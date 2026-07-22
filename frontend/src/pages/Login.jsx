@@ -33,17 +33,22 @@ catch(error){
 };
 
   return (
-    <div className='container'>
+   <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
      <div className='row justify-content-center'>
       <div className='col-md-6'>
-      <div className="card shadow">
-      <div className="card-body">
+      <div className="card shadow-lg border-0 rounded-4" style={{ maxWidth: "450px", width: "100%" }}>
+      <div className="card-body p-5">
 
-      <h2 className='text-center mb-4'>Login</h2>
+      <div className="text-center mb-4">
+    <h2 className="fw-bold">Welcome Back 👋</h2>
+    <p className="text-muted mb-0">
+        Sign in to continue
+    </p>
+</div>
       
  {/* if any error occurs to give alert */}
       {message && (
-        <div className="alert alert-danger">
+        <div className="alert alert-danger text-center py-2">
         {message}
         </div>
       )}
@@ -52,36 +57,51 @@ catch(error){
 
 
         <div className="mb-3">
-          <label>Email:</label>
+          <label className="form-label">Email:</label>
           {/* //input control */}
           <input type="email" 
           className="form-control"
+          autoComplete='email'
+          placeholder="Enter your email" 
+          required
            value={email}
-            onChange={(e) => setEmail(e.target.value)} />
+            onChange={(e) => setEmail(e.target.value)}
+            />
         </div>
 
 
         <div className="mb-3">
-          <label>Password:</label>
+
+          <label className="form-label">Password:</label>
+          
+          <div className='input-group'>
           <input type={showPassword?"text":"password"} 
           className="form-control"
+          autoComplete='password'
+          placeholder="Enter your password"
+          required
           value={password}
-          onChange={(e)=> setPassword(e.target.value)} />
+          onChange={(e)=> setPassword(e.target.value)} 
+          />
+
           <button
+           className="btn btn-outline-secondary"
           type="button"
           onClick={() => setShowPassword(prev => !prev)}
           >
           {showPassword ? "Hide" : "Show"}
           </button>
+
+          </div>
           </div>
 
       
-      <button type="submit" className="btn btn-primary" disabled={loading}>
+      <button type="submit" className="btn btn-primary w-100 mt-2" disabled={loading}>
         {loading ? "Logging in..." : "Login"}
         </button>
 
 
-        <p className="mt-3">
+        <p className="text-center mt-3 mb-0">
           Don't have an account?{" "}
           <Link to="/register">Register</Link>
         </p> 
